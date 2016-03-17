@@ -1,47 +1,41 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+'''
+kv_client.py mimics redis client
+'''
 
-from socket import *
+import socket
 import sys
 
-HOST='localhost'
-PORT=5678
+HOST = 'localhost'
+PORT = 5678
 BUFSIZ = 4096
 ADDR = (HOST, PORT)
+IS_INTERACTIVE = len(sys.argv) < 2
+EXIT_NO = 0
+# ERRORS
 
-if len(sys.argv) < 2:
-    while True:
-        tcpCliSock = socket(AF_INET, SOCK_STREAM)
-        try:
-            tcpCliSock.connect(ADDR)
-            data = raw_input('> ')
-            if not data:
-                break
-            tcpCliSock.send('%s\r\n' % data)
-            data = tcpCliSock.recv(BUFSIZ)
-            if not data:
-                break
-            print data.strip()
-        except Exception, e:
-            print Exception, ":", e
-            exit(1)
-        finally:
-            tcpCliSock.close()
-else:
-    tcpCliSock = socket(AF_INET, SOCK_STREAM)
+while True:
+    TCPSOCK = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        tcpCliSock.connect(ADDR)
-        data = " ".join(sys.argv[1:])
-        if not data:
-            exit(0)
-        tcpCliSock.send('%s\r\n' % data)
-        data = tcpCliSock.recv(BUFSIZ)
-        if not data:
-            exit(0)
-        print data.strip()
-    except Exception, e:
-        print Exception, ":", e
-        exit(1)
+        TCPSOCK.connect(ADDR)
+        if IS_INTERACTIVE:
+            INPUT_DATA = raw_input('> ')
+        else:
+            INPUT_DATA = " ".join(sys.argv[1:])
+        if not INPUT_DATA:
+            print "no input, bye!"
+            break
+        TCPSOCK.send('%s\r\n' % INPUT_DATA)
+        INPUT_DATA = TCPSOCK.recv(BUFSIZ)
+        if not INPUT_DATA:
+            print "wrong input"
+            EXIT_NO = 1
+        print INPUT_DATA.strip()
+    except socket.error as msg:
+        print "woops, socket err"
+        # print msg
     finally:
-        tcpCliSock.close()
-
+        TCPSOCK.close()
+        if not IS_INTERACTIVE:
+            sys.exit(EXIT_NO)

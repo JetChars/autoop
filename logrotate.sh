@@ -11,6 +11,9 @@ COUNT=0
 # du's minimum unit is kb, which represent actual disk useage
 FILE_SIZE=`du FILENAME | awk '{print $1}'`
 
+# gzip compress files to gz
+
+
 # get opts
 until [ $# -eq 0 ];do
     case $1 in
