@@ -33,7 +33,6 @@ until [ $# -eq 0 ];do
         -m | --mode)
             [[ $# < 2 ]] && break
             if [ $2 == "move" -o $2 == "copytruncate" ]; then
-                echo MODE=$2
                 shift
             else
                 echo "Wrong mode"
@@ -93,14 +92,12 @@ fi
 while [ -e $FILENAME.$POS ];do
     POS=$((POS+1))
 done
-echo $POS
 
 if [ $GZ_CNT -eq 0 ];then
     GZ_CNT=$POS
 fi
 
 while [ $POS -ge 1 ];do
-    echo mv $FILENAME.$((POS-1)) $FILENAME.$POS
     rotate $MODE $FILENAME.$((POS-1)) $FILENAME.$POS
     if [ -e $FILENAME.$((POS-1)).gz ]; then
         rotate $MODE $FILENAME.$((POS-1)).gz $FILENAME.$POS.gz
