@@ -13,6 +13,19 @@ FILE_SIZE=`du FILENAME | awk '{print $1}'`
 
 # gzip compress files to gz
 
+rotate()
+{
+    if [[ $1 == "copytruncate" ]]; then
+        copy $2 $3
+        truncate -s 0 $2
+    elif [[ $1 == "move" ]]; then
+        mv $2 $3
+        touch $2
+    else
+        echo "wrong copy mode"
+    fi
+}
+
 
 # get opts
 until [ $# -eq 0 ];do

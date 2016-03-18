@@ -10,25 +10,53 @@ import threading
 import sys
 import getopt
 import re
+import urllib
+from contextlib import closing
+
 
 
 class KVHandler(SocketServer.StreamRequestHandler):
     '''
     KVHandler is used for handling stream request
     '''
+    KV_DB = {}
+    URL_DB = {}
+    AUTH = {}
+    IS_USER = False
+
+    @staticmethod
+    def load_conf():
+        """
+        load auth config
+        """
+        with open("auth.conf") as auth_file:
+            for eachline in auth_file.readlines():
+                if not re.search('^#', eachline):
+                    usr = eachline.strip().split()
+                    KVHandler.AUTH[usr[0]] = usr[1]
+
     def handle(self):
         self.data = self.rfile.readline().strip().split()
         self.result = ""
         if self.data[0] in ("SET", "set"):
             if len(self.data) == 3:
-                DB[self.data[1]] = self.data[2]
+                KVHandler.KV_DB[self.data[1]] = self.data[2]
                 self.result = "OK"
         elif self.data[0] in ("GET", "get"):
-            self.result = DB.get(self.data[1], "")
+            self.result = KVHandler.KV_DB.get(self.data[1], "")
         elif self.data[0] in ("AUTH", "auth"):
-            if AUTH.get(self.data[1]) == self.data[2]:
+            if KVHandler.AUTH.get(self.data[1]) == self.data[2]:
                 self.result = "OK"
-        self.wfile.write(str(self.result))
+                KVHandler.IS_USER = True
+        elif self.data[0] in ("URL", "url") and KVHandler.IS_USER:
+            if KVHandler.URL_DB.has_key(self.data[1]):
+                self.result = str(KVHandler.URL_DB[self.data[1]])
+            else:
+                with closing(urllib.urlopen(self.data[2])) as page:
+                    url_result = [len(page.read()), page.code]
+                    KVHandler.URL_DB[self.data[1]] = url_result
+                    self.result = str(url_result)
+        self.wfile.write(self.result)
 
 
 
@@ -42,8 +70,6 @@ if __name__ == '__main__':
 
     HOST = "localhost"
     PORT = 5678
-    DB = {}
-    AUTH = {}
 
     for name, val in OPTS:
         if name in ("-h", "--host"):
@@ -51,11 +77,7 @@ if __name__ == '__main__':
         elif name in ("-p", "--port"):
             PORT = int(val)
 
-    with open("auth.conf") as auth_file:
-        for eachline in auth_file.readlines():
-            if not re.search('^#', eachline):
-                usr = eachline.strip().split()
-                AUTH[usr[0]] = usr[1]
+    KVHandler.load_conf()
 
     SERVER = SocketServer.ThreadingTCPServer((HOST, PORT), KVHandler)
     SERVER_THREAD = threading.Thread(target=SERVER.serve_forever)
