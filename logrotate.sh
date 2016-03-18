@@ -1,90 +1,111 @@
 #!/bin/sh
 
-# use ``cp`` ``truncate`` or move
-# backup filename.1 to filename.2 and so forth
-# compress backup file into gz files
-
-# init
-MODE=move
-POS=1
-COUNT=0
-# du's minimum unit is kb, which represent actual disk useage
-FILE_SIZE=`du FILENAME | awk '{print $1}'`
-
-# gzip compress files to gz
-
 rotate()
 {
-    if [[ $1 == "copytruncate" ]]; then
+    if [ $1 = "copytruncate" ]; then
         copy $2 $3
         truncate -s 0 $2
-    elif [[ $1 == "move" ]]; then
-        mv $2 $3
+    elif [ $1 = "move" ]; then
+        mv -f $2 $3
         touch $2
     else
-        echo "wrong copy mode"
+        echo "wrong mode"
+        exit 1
     fi
 }
 
 
+# init
+# ====
+MODE=move
+POS=1
+GZ_CNT=0
+MIN_SIZE=0
+
 # get opts
+# ========
 until [ $# -eq 0 ];do
     case $1 in
-        -m | --mode)
-            [[ $# < 2 ]] && break
-            if [ $2 == move -o $2 == copytruncate ]; then
-                echo MODE=$2
-                shift
-            else
-                echo Wrong Argument
-                break
-            fi;;
-
         -h | --help | ?)
             echo "rotate_log.sh [-n] [-h|--help] [-z count]
             [-m|--mode copytruncate|move]
-            [-s|-- size minsize] filename";;
-
+            [-s|-- size minsize] filename"
+            ;;
+        -m | --mode)
+            [[ $# < 2 ]] && break
+            if [ $2 == "move" -o $2 == "copytruncate" ]; then
+                shift
+            else
+                echo "Wrong mode"
+                exit 1
+            fi 
+            ;;
         -n)
             echo 'do nothing'
-            break;;
+            exit
+            ;;
         -s)
             if [[ $2 =~ ^[0-9]+$ ]];then
                 MIN_SIZE=$2
-            elif [[ $2 =~ ^[0-9]+k$ ]]
+            elif [[ $2 =~ ^[0-9]+[a-zA-Z]$ ]];then
                 # min_size might contains more than one charactors
                 MIN_SIZE=${2%%[K|M|G|k|m|g]}
                 UNIT=${2:0-1}
-                if [[ $UNIT == M -o $UNIT == m ]]; then
+                if [ $UNIT == "M" -o $UNIT == "m" ]; then
                     MIN_SIZE=$((MIN_SIZE*1024))
-                elif [[ $UNIT == G -o $UNIT == g ]]
+                elif [ $UNIT == "G" -o $UNIT == "g" ]; then
                     MIN_SIZE=$((MIN_SIZE*1024*1024))
-                else
-                    echo "wrong size"
-                    exit(-1)
+                elif [ $UNIT == "K" -o $UNIT == "k" ]; then
+                    MIN_SIZE=$2
                 fi
             else
-                echo "error input"
+                echo "wrong input format"
+                exit 1
             fi
-            if [[ $FILE_SIZE < $MIN_SIZE ]]
-                exit;;
-            fi
+            shift
+            ;;
+        -z)
+            GZ_CNT=$2
+            shift
+            ;;
         *)
             FILENAME=$1
-
+            if [ -e $FILENAME ];then
+                FILE_SIZE=`du $FILENAME | awk '{print $1}'`
+            else
+                print "file does not exist!"
+                exit 1
+            fi
+            ;;
     esac
     shift
 done
 
+
+# test filezise
+# ==============
+if [ $FILE_SIZE -lt $MIN_SIZE ];then
+    exit 0
+fi
+
 # backup files
+# ============
 while [ -e $FILENAME.$POS ];do
     POS=$((POS+1))
 done
-while [[ $POS > 1 ]];do
-    mv $FILENAME.$((POS-1)) $FILENAME.$POS
+
+if [ $GZ_CNT -eq 0 ];then
+    GZ_CNT=$POS
+fi
+
+while [ $POS -gt 1 ];do
+    rotate $MODE $FILENAME.$((POS-1)) $FILENAME.$POS
+    if [ -e $FILENAME.$((POS-1)).gz ]; then
+        rotate $MODE $FILENAME.$((POS-1)).gz $FILENAME.$POS.gz
+    elif [ $POS -ge $GZ_CNT ]; then 
+        gzip -c $FILENAME.$POS > $FILENAME.$POS.gz
+    fi
     POS=$((POS-1))
 done
-mv $FILENAME $FILENAME.1
-touch $FILENAME
-echo $POS
+rotate $MODE $FILENAME $FILENAME.1
 
