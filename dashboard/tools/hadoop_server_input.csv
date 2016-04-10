@@ -1,0 +1,17 @@
+#,CPU,Memory,Storage,Network,Purpose,Remark
+1,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Controller/Network,Bare Metal
+2,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute1,Bare Metal
+3,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute2,Bare Metal
+4,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute3,Bare Metal
+5,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Controller,OpenStack & KVM
+6,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute1,OpenStack & KVM
+7,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute2,OpenStack & KVM
+8,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute3,OpenStack & KVM
+9,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Master,Bare Metal & RAID5
+10,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Slave1,Bare Metal & RAID5
+11,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Slave2,Bare Metal & RAID5
+12,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Slave3,Bare Metal & RAID5
+13,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Controller,OpenStac& NovaDocker
+14,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute1,OpenStac& NovaDocker
+15,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute2,OpenStac& NovaDocker
+16,Xeon E5 2680 x2,128GB DDR3,2.5 1TB HDD x5,"1GbE x2 & 10GbE x1",Compute3,OpenStac& NovaDocker

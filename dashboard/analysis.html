@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Analysis</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/css/dashboard.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">DoopShot <span class="glyphicon glyphicon-copyright-mark" style="font-size: 10px;"></span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-left">
+            <li><a href="dashboard.html">dashboard <span class="glyphicon glyphicon-dashboard"></span></a></li>
+            <li><a href="hadoop_mgmt.html">hadoop mgmt <span class="glyphicon glyphicon-road"></span></a></li>
+            <li class="active"><a href="#">analysis <span class="glyphicon glyphicon-tasks"></span><span class="sr-only">(current)</span></a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><span class="glyphicon glyphicon-envelope"/><span class="badge" style="background-color: red;">36</span></a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-align-justify"></span>&nbsp&nbsp</a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">HiBench Tasks<span class="sr-only">(current)</span></a></li>
+            <li><a href="#">HiBench Task Templates</a></li>
+            <li><a href="#">Hadoop Templates</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+          <h2 class="sub-header">HiBench Task List</h2>
+          <div class="container-fluid">
+
+            <br>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Filter...">
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-info" type="button">
+                  <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-success">
+                  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-danger">
+                  <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                </button>
+                <button type="button" class="btn btn-warning">
+                  <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </button>
+              </span>
+            </div>
+            <br>
+            <!-- <div class="btn-group" role="group">
+              <button type="button" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+              </button>
+              <button type="button" class="btn btn-warning">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+              </button>
+            </div> -->
+          </div>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th> # </th>
+                  <th> CPU </th>
+                  <th> Memory </th>
+                  <th> Storage </th>
+                  <th> Network </th>
+                  <th> Purpose </th>
+                  <th> Remark </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th> 1 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Controller/Network </th>
+                  <th> Bare Metal </th>
+                </tr>
+                <tr>
+                  <th> 2 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Compute1 </th>
+                  <th> Bare Metal </th>
+                </tr>
+                <tr>
+                  <th> 3 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Compute2 </th>
+                  <th> Bare Metal </th>
+                </tr>
+                <tr>
+                  <th> 4 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Compute3 </th>
+                  <th> Bare Metal </th>
+                </tr>
+                <tr>
+                  <th> 5 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Controller </th>
+                  <th> OpenStack & KVM </th>
+                </tr>
+                <tr>
+                  <th> 6 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Compute1 </th>
+                  <th> OpenStack & KVM </th>
+                </tr>
+                <tr>
+                  <th> 7 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Compute2 </th>
+                  <th> OpenStack & KVM </th>
+                </tr>
+                <tr>
+                  <th> 8 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Compute3 </th>
+                  <th> OpenStack & KVM </th>
+                </tr>
+                <tr>
+                  <th> 9 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Master </th>
+                  <th> Bare Metal & RAID5 </th>
+                </tr>
+                <tr>
+                  <th> 10 </th>
+                  <th> Xeon E5 2680 x2 </th>
+                  <th> 128GB DDR3 </th>
+                  <th> 2.5 1TB HDD x5 </th>
+                  <th> 1GbE x2 & 10GbE x1 </th>
+                  <th> Slave1 </th>
+                  <th> Bare Metal & RAID5 </th>
+                </tr>
+              </tbody>
+            </table>
+            <nav>
+              <ul class="pagination">
+                <li class="disabled">
+                  <a href="#" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                  </a>
+                </li>
+                <li class="active"><a href="#">1</a></li>
+                <li><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li>
+                  <a href="#" aria-label="Next">
+                    <span aria-hidden="true">Next</span>
+                  </a>
+                </li>
+                <div class="input-group col-sm-3 pull-right">
+                  <input type="text" class="form-control" placeholder="10" aria-describedby="basic-addon2">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-warning" type="button">items/page
+                      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </button>
+                  </span>
+                </div>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/js/vendor/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+</html>
