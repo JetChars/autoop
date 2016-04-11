@@ -79,27 +79,41 @@
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
+          <h1 class="page-header">Overview</h1>
 
           <div class="container-fluid">
             <div class="container col-xs-4">
               <canvas id="myChart1" width="150" height="150"></canvas>
               <ul class="list-group">
-                <li class="list-group-item">Task Status</li>
-                <li class="list-group-item"><span class="label label-success">Success</span>&nbsp;&#9;1</li>
-                <li class="list-group-item"><span class="label label-info">info</span>&nbsp;1</li>
-                <li class="list-group-item"><span class="label label-primary">primary</span>&nbsp;6</li>
-                <li class="list-group-item"><span class="label label-warning">warning</span>&nbsp;3</li>
-                <li class="list-group-item"><span class="label label-danger">danger</span>&nbsp;2</li>
+                <li class="list-group-item"><strong>Task Status</strong></li>
+                <li class="list-group-item"><span class="label label-danger">failed</span>&nbsp; x1</li>
+                <li class="list-group-item"><span class="label label-warning">warning</span>&nbsp;x1</li>
+                <li class="list-group-item"><span class="label label-success">running</span>&nbsp;&#9;x6</li>
+                <li class="list-group-item"><span class="label label-info">pending</span>&nbsp;x3</li>
+                <li class="list-group-item"><span class="label label-primary">paused</span>&nbsp;x2</li>
               </ul>
             </div>
             <div class="container col-xs-4">
               <canvas id="myChart2" width="150" height="150"></canvas>
-              node status
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Node Status</strong></li>
+                <li class="list-group-item"><span class="label label-danger">down</span>&nbsp; x1</li>
+                <li class="list-group-item"><span class="label label-warning">allocating</span>&nbsp;x1</li>
+                <li class="list-group-item"><span class="label label-success">available</span>&nbsp;&#9;x16</li>
+                <li class="list-group-item"><span class="label label-info">free</span>&nbsp;x4</li>
+                <li class="list-group-item"><span class="label label-primary">in use</span>&nbsp;x8</li>
+              </ul>
             </div>
             <div class="container col-xs-4">
               <canvas id="myChart3" width="150" height="150"></canvas>
-              cluster status
+              <ul class="list-group">
+                <li class="list-group-item"><strong>Cluster Status</strong></li>
+                <li class="list-group-item"><span class="label label-danger">down</span>&nbsp; x1</li>
+                <li class="list-group-item"><span class="label label-warning">creating</span>&nbsp;x1</li>
+                <li class="list-group-item"><span class="label label-success">available</span>&nbsp;&#9;x1</li>
+                <li class="list-group-item"><span class="label label-info">in use</span>&nbsp;x1</li>
+                <li class="list-group-item"><span class="label label-primary">removing</span>&nbsp;x1</li>
+              </ul>
             </div>
             <script type="text/javascript">
               var color_success = "#5cba63"
@@ -107,7 +121,7 @@
               var color_primary = "#3478b5"
               var color_warning = "#f0ae56"
               var color_danger = "#d95150"
-              var piedata = [
+              var piedata1 = [
                 {
                   value : 1,
                   color : color_danger
@@ -129,9 +143,53 @@
               		color : color_primary
               	}
               ]
-              new Chart(document.getElementById('myChart1').getContext("2d")).Doughnut(piedata)
-              new Chart(document.getElementById('myChart2').getContext("2d")).Doughnut(piedata)
-              new Chart(document.getElementById('myChart3').getContext("2d")).Doughnut(piedata)
+              var piedata2 = [
+                {
+                  value : 1,
+                  color : color_danger
+                },
+                {
+                  value : 1,
+                  color : color_warning
+                },
+                {
+                  value: 16,
+                  color: color_success
+                },
+                {
+                  value : 4,
+                  color : color_info
+                },
+                {
+                  value : 8,
+                  color : color_primary
+                }
+              ]
+              var piedata3 = [
+                {
+                  value : 1,
+                  color : color_danger
+                },
+                {
+                  value : 1,
+                  color : color_warning
+                },
+                {
+                  value: 1,
+                  color: color_success
+                },
+                {
+                  value : 1,
+                  color : color_info
+                },
+                {
+                  value : 1,
+                  color : color_primary
+                }
+              ]
+              new Chart(document.getElementById('myChart1').getContext("2d")).Doughnut(piedata1)
+              new Chart(document.getElementById('myChart2').getContext("2d")).Doughnut(piedata2)
+              new Chart(document.getElementById('myChart3').getContext("2d")).Doughnut(piedata3)
             </script>
           </div>
 
